@@ -19,7 +19,7 @@
 
 <script>
 import { XHeader, XInput, Group, XButton, Loading, Alert, ViewBox } from "vux";
-import {postAdmin} from '@/server'
+import {postAdmin,postSesionLogin} from '@/server'
 export default {
   data() {
     return {
@@ -49,6 +49,7 @@ export default {
             this.$store.commit('setLogin',{
               isLogin:true
             })
+            this.$store.commit('setAdminInfo',result.data.userInfo)
             this.$router.push({
               name:'Manange'
             })
@@ -74,7 +75,20 @@ export default {
     }
   },
   created(){
-
+    postSesionLogin().then((result) => {
+      console.log(result);
+      if(result.data.code===0){
+        this.$store.commit('setLogin',{
+          isLogin:true
+        });
+        this.$store.commit('setAdminInfo',{username:result.data.username});
+        this.$router.push({
+          name:'Manange'
+        })
+      }
+    }).catch((e) => {
+       return
+    })
   }
 };
 </script>

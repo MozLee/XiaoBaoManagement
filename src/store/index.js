@@ -6,7 +6,8 @@ let store = new Vuex.Store({
     state:{
         isLogin:false,
         usersInfo:{},
-        getUsersInfoDone:false
+        getUsersInfoDone:false,
+        adminInfo:{}
     },
     mutations:{
         setLogin(state,payload){
@@ -17,6 +18,9 @@ let store = new Vuex.Store({
         },
         setGetUsersInfoDone(state,payload){
             state.getUsersInfoDone = payload.done;
+        },
+        setAdminInfo(state,payload){
+            state.adminInfo= payload;
         }
     },
     actions:{}

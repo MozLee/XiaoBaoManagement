@@ -5,7 +5,7 @@
             <cell>
                  <img slot="icon" width="60" style="display:block;margin-right:10px;border-radius:10px" :src="baseAvatarUrl+userInfo.alias+'.jpg'">
                  <ul class="name" slot="child">
-                     <li class="first">{{userInfo.name.slice(0,10)}} <icon :class="genderClass" name='mars' scale=".9"></icon></li>
+                     <li class="first">{{userInfo.name.slice(0,10)}} <icon :class="genderClass" :name='genderIco' scale=".9"></icon></li>
                      <li>ID:{{infoId}}</li>
                      <li>哈哈</li>
                  </ul>
@@ -114,7 +114,7 @@ export default {
         return 'mars'
       }
       if(this.userInfo.sex==2){
-        return 'female'
+        return 'venus'
       }
     }
   }
@@ -152,6 +152,5 @@ export default {
 }
 .fa-icon {
   vertical-align: top;
-  margin-left: 5px;
 }
 </style>
