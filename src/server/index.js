@@ -37,3 +37,7 @@ export function postWeatherSevice(bl,id){
       bl,id
 }));
 }
+//更新数据到数据库
+export function getUpdate(){
+  return myApi.get('/updateall');
+}

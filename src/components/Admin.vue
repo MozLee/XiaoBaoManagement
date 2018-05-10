@@ -3,9 +3,6 @@
     <group title="ADMIN-USER">
       <cell :title="adminName"></cell>
     </group>
-    <group title="小宝运行状态">
-      <cell title="正常"></cell>
-    </group>
      <group title="ADMIN-USER-Setting">
       <cell title="修改密码" :is-link="true" :arrow-direction="showInput?'up':'down'" @click.native="showInput=!showInput"></cell>
       <template v-if="showInput">
@@ -15,13 +12,19 @@
         <x-button type="primary" style="width:90%" @click.native="checkVal">确认修改</x-button>                
       </template>
     </group>
+     <group title="小宝运行状态">
+      <cell title="正常"></cell>
+    </group>
+     <group title="UPDATE-DATA">
+      <cell title="从微信服务器更新数据到小宝数据库" :is-link="true" @click.native="updateDataToMysql"></cell>
+    </group>
     <x-button  @click.native="adminLogout" type="warn" style="width:90%;margin-top:20px">退出当前管理员账户</x-button>                
     
   </div>
 </template>
 <script>
   import{Group,Cell,XInput,XButton} from 'vux';
-  import {postChangeAdminPassword,postAdminLogout} from '@/server'
+  import {postChangeAdminPassword,postAdminLogout,getUpdate} from '@/server'
   export default {
     components:{
       Group,Cell,XInput,XButton
@@ -58,6 +61,21 @@
       },
       changePassword(adminName,oldPassWord,newPassWord){
             return postChangeAdminPassword(adminName,oldPassWord,newPassWord)        
+      },
+      updateDataToMysql(){
+        this.$vux.loading.show({
+          text:'更新中'
+        })
+        getUpdate().then((result) => {
+          console.log(result);
+          if(result.data.code===0){
+             this.$vux.loading.hide()
+             this.$vux.alert.show({
+               title:'恭喜',
+               content:'更新数据成功'
+             })
+          }
+        })
       },
       checkVal(){
         if(this.oldPassWord===this.newPassWord){
