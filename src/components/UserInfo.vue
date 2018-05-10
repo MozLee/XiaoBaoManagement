@@ -121,8 +121,15 @@ export default {
   ,
   methods:{
     handleWeather(e){
+      this.$vux.loading.show()
       postWeatherSevice(e,this.userInfo.alias).then((result) => {
         console.log(result);
+        this.$vux.alert.show({
+          title:"信息提示",
+          content:result.data
+        })
+        this.$vux.loading.hide()
+        
       })
     }
   }
