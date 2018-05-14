@@ -37,6 +37,9 @@ export function postWeatherSevice(bl,id){
       bl,id
 }));
 }
+export function getXiaoBaoState(){
+  return myApi.get('/xiaobaostate')
+}
 //更新数据到数据库
 export function getUpdate(){
   return myApi.get('/updateall');

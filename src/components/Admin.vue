@@ -13,7 +13,7 @@
       </template>
     </group>
      <group title="小宝运行状态">
-      <cell title="正常"></cell>
+      <cell :title="xbstate.state"></cell>
     </group>
      <group title="UPDATE-DATA">
       <cell title="从微信服务器更新数据到小宝数据库" :is-link="true" @click.native="updateDataToMysql"></cell>
@@ -24,8 +24,14 @@
 </template>
 <script>
   import{Group,Cell,XInput,XButton} from 'vux';
-  import {postChangeAdminPassword,postAdminLogout,getUpdate} from '@/server'
+  import {postChangeAdminPassword,postAdminLogout,getUpdate,getXiaoBaoState} from '@/server'
   export default {
+    created(){
+      getXiaoBaoState().then((result) => {
+        console.log(result);
+        this.xbstate = result.data.data;
+      })
+    },
     components:{
       Group,Cell,XInput,XButton
     },
@@ -34,7 +40,8 @@
         oldPassWord:'',
         newPassWord:'',
         newPassWord2:'',
-        showInput:false
+        showInput:false,
+        xbstate:{state:'状态获取中。。。'}
       }
     },
     computed:{
@@ -74,7 +81,17 @@
                title:'恭喜',
                content:'更新数据成功'
              })
+             return;
+          } 
+          if(result.data.code===1){
+             this.$vux.loading.hide()
+             this.$vux.alert.show({
+               title:'很遗憾',
+               content:'更新数据失败,XiaoBao系统没有启动'
+             })
+             return;
           }
+
         })
       },
       checkVal(){
