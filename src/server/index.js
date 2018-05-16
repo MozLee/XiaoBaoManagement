@@ -44,3 +44,10 @@ export function getXiaoBaoState(){
 export function getUpdate(){
   return myApi.get('/updateall');
 }
+//设置天气推送时间
+export function setWeatherTime(time){
+  return myApi.get('/setweathertime?time='+time)
+}
+export function getWeatherTime(){
+  return myApi.get('/weathertime')
+}
